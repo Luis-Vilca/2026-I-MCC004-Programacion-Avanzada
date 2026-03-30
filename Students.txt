@@ -2,7 +2,7 @@
 1 Alvarez Cadillo, Michell Adrian
 2 Bernaola Gayoso César Raúl
 3 Castro Chaupis, Armando Cristhian
-4 Castro Galindo Carlo André
+4 Castro Galindo Carlo André <carlocastrogalindo@gmail.com>,
 5 Diaz Tapia Adderly Orlando
 6 DÍAZ VEGA OLENKA HELENE
 7 Lopez Flores Royer Amed
