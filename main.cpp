@@ -31,7 +31,10 @@ int main() {
     // 10 Miranda Zarate Jorge Luis <mirandazaratejorge@gmail.com>,
 
     // 11 Oscar Toledo Guerrero <tgoscar@gmail.com>
-
+    int x5 = 4, y5 = 4;
+    int o = resta(x5, y5);
+    cout << "Oscar Toledo Guerrero: " << o << endl;
+    
     // 12 Quispe Calloapaza, David Saul <quispedavid987@gmail.com>
 
     // 13 Suarez Maciel Susana Isabel <susana.suarez.maciel@gmail.com>
