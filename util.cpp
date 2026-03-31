@@ -6,11 +6,20 @@ int suma(int x, int y) {
 }
 
 // 1 Alvarez Cadillo, Michell Adrian <<michell.aac.1106@gmail.com>,
+int resta(int x, int y) {
+    return x - y;
+}
 
 // 2 Bernaola Gayoso César Raúl <bernaolacesar@gmail.com>,
+int multiplicacion(int x, int y) {
+    return x * y;
+}
 
 // 3 Castro Chaupis, Armando Cristhian <armandocristhiancastrochaupis@gmail.com>,
-
+float dividir(int x,int y)
+{
+    return (float)x/(float)y;
+}
 // 4 Castro Galindo Carlo André <carlocastrogalindo@gmail.com>,
 
 // 5 Diaz Tapia Adderly Orlando <adderly.diaz.tapia@gmail.com>
