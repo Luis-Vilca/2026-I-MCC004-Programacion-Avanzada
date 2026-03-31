@@ -30,6 +30,9 @@ int suma(int x, int y) {
 // 12 Quispe Calloapaza, David Saul <quispedavid987@gmail.com>
 
 // 13 Suarez Maciel Susana Isabel <susana.suarez.maciel@gmail.com>
+    int cuadrado(int x13){
+        return x13 * x13;
+    }
 
 // 14 Tellez Heredia Jhon <phyjhon@gmail.com>,
 
