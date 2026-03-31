@@ -1,9 +1,10 @@
-#include "util.h"
 #include <cmath>
 #include <iostream>
+#include "util.h"
+
 
 // 0. Ernesto Cuadros <ecuadros@spc.org.pe>
-int suma(int x, int y) {
+T1 suma(T1 x, T1 y) {
     return x + y;
 }
 

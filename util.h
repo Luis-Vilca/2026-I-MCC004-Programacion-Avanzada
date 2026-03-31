@@ -1,7 +1,9 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
+#include "types.h"
+
 // 0. Ernesto Cuadros <ecuadros@spc.org.pe>
-int suma(int x, int y);
+T1 suma(T1 x, T1 y);
 
 // 1 Alvarez Cadillo, Michell Adrian <<michell.aac.1106@gmail.com>,
 
@@ -22,6 +24,7 @@ double raizCuadrada(double x);
 
 // 9 Lopez Flores Royer Amed <roamlofl9@gmail.com>
 double valor_absoluto(double x);
+
 // 10 Miranda Zarate Jorge Luis <mirandazaratejorge@gmail.com>,
 unsigned int factorial(unsigned int number);
 
