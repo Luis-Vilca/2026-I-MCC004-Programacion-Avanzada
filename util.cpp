@@ -15,9 +15,9 @@ T1 suma(T1 x, T1 y) {
 // 3 Castro Chaupis, Armando Cristhian <armandocristhiancastrochaupis@gmail.com>,
 
 // 4 Castro Galindo Carlo André <carlocastrogalindo@gmail.com>,
-int potencia(int base, int exponente) {
-    int resultado = 1;
-    for (int i = 0; i < exponente; i++) {
+T1 potencia(T1 base, T1 exponente) {
+    T1 resultado = 1;
+    for (T1 i = 0; i < exponente; i++) {
         resultado *= base;
     }
     return resultado;

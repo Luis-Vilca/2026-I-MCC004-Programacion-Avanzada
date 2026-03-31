@@ -12,7 +12,7 @@ T1 suma(T1 x, T1 y);
 // 3 Castro Chaupis, Armando Cristhian <armandocristhiancastrochaupis@gmail.com>,
 
 // 4 Castro Galindo Carlo André <carlocastrogalindo@gmail.com>,
-int potencia(int base, int exponente);
+T1 potencia(T1 base, T1 exponente);
 
 // 5 Diaz Tapia Adderly Orlando <adderly.diaz.tapia@gmail.com>
 double raizCuadrada(double x);
