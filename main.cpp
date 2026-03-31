@@ -18,6 +18,7 @@ int main() {
     
     // 2 Bernaola Gayoso César Raúl <bernaolacesar@gmail.com>,
     // Multiplicar
+    cout << "Bernaola Gayoso Cesar Raul: " << multiplicacion(x0, y0) << endl;
 
     // 3 Castro Chaupis, Armando Cristhian <armandocristhiancastrochaupis@gmail.com>,
     // Dividir
