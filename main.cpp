@@ -14,8 +14,8 @@ using namespace std;
 int main() {
     // DemoFunctions();
     // DemoComplex();
-    BitSigno();
+    // BitSigno();
     // DemoPolimorfismo();
-    //DemoPointers1();
+    DemoPointers1();
     return 0;
 }
