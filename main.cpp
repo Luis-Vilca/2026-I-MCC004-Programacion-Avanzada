@@ -3,7 +3,9 @@
 #include "complex.h"
 #include "functions.h"
 #include "util.h"
+#include "BitSigno.h"
 #include "polimorfismo.h"
+#include "Pointers.h"
 
 using namespace std;
 
@@ -12,6 +14,8 @@ using namespace std;
 int main() {
     // DemoFunctions();
     // DemoComplex();
-    DemoPolimorfismo();
+    BitSigno();
+    // DemoPolimorfismo();
+    //DemoPointers1();
     return 0;
 }
