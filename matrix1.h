@@ -31,8 +31,27 @@ void Matrix1<T>::Create()
     m_pMat = new T *[m_rows];
     for(size_t i = 0 ; i < m_rows ; ++i)
         m_pMat[i] = new T[m_cols];
-}
+};
 
+template <typename T>
+istream &Matrix1<T>::Read(istream &is){
 
+};
+
+template <typename T>
+template <typename Func, typename... Args>
+void Matrix1<T>::ApplyFunctionToAll(Func func, Args&& ...args){
+
+};
+
+template <typename T>
+ostream &Matrix1<T>::Print(ostream &os){
+
+};
+
+template <typename T>
+void Matrix1<T>::Destroy(){
+
+};
 
 #endif // __MATRIX_H__
