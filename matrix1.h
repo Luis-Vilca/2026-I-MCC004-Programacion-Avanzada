@@ -88,7 +88,7 @@ istream &operator>>(istream &is, Matrix1<T> &matrix){
 }
 
 template <typename T>
-ostream &operator<<(ostream &os, Matrix1<T> &matrix){\
+ostream &operator<<(ostream &os, Matrix1<T> &matrix){
     return matrix.Print(os);
 }
 
