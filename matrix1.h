@@ -29,6 +29,7 @@ class Matrix1 {
         Matrix1 operator*(T value) const;
         Matrix1 operator*(const Matrix1 &other) const;
         Matrix1& operator=(Matrix1&& other);
+        T* operator[](size_t row);
 };
 
 template <typename T>
@@ -191,6 +192,13 @@ Matrix1<T>& Matrix1<T>::operator=(Matrix1<T>&& other)
     m_cols = exchange(other.m_cols, 0);
 
     return *this;
+}
+
+template <typename T>
+T* Matrix1<T>::operator[](size_t row)
+{
+    assert(row < m_rows);
+    return m_pMat[row];
 }
 
 #endif // __MATRIX_H__

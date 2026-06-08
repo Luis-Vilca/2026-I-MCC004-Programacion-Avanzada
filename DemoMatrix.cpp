@@ -67,4 +67,13 @@ void DemoMatrix(){
 
     cout << "Resultado:\n";
     cout << m1 << endl;
+
+    cout << "Prueba de como usar el operador corchete:" << endl;
+    cout << m1[2][2] << endl;
+
+    m1[0][0] = 5;
+    cout << m1 << endl;
+
+    cout << m1[0][0] << endl;
+
 };
