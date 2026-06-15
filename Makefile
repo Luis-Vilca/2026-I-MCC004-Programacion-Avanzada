@@ -1,5 +1,11 @@
 CXX = g++
-CXXFLAGS = -std=c++2b -Wall -g -pthread # Añadido -pthread
+
+PYTHON_INC = -IC:/Users/USER/AppData/Local/Programs/Python/Python313/Include
+PYBIND_INC = -IC:/Users/USER/AppData/Local/Programs/Python/Python313/Lib/site-packages/pybind11/include
+PYTHON_LIB = -LC:/Users/USER/AppData/Local/Programs/Python/Python313/libs
+PYTHON_LINK = -lpython313
+
+CXXFLAGS = -std=c++2b -Wall -g -pthread $(PYTHON_INC) $(PYBIND_INC)# Añadido -pthread
 LDFLAGS = -pthread # Añadido -pthread
 
 TARGET = main
@@ -13,7 +19,8 @@ SRCS = main.cpp util.cpp \
        polimorfismo.cpp \
        BitSigno.cpp \
        Pointers.cpp \
-       array1.cpp
+       array1.cpp \
+       DemoMatrix.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -25,7 +32,13 @@ $(TARGET): $(OBJS)
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(OBJS) $(TARGET)
+pybind:
+	$(CXX) $(CXXFLAGS) -shared matrix1_pybind.cpp \
+	$(PYTHON_LIB) \
+	$(PYTHON_LINK) \
+	-o matrix1.pyd
 
-.PHONY: all clean
+clean:
+	rm -f $(OBJS) $(TARGET) matrix1.pyd
+
+.PHONY: all clean pybind

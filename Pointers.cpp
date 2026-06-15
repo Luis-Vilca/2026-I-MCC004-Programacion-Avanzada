@@ -7,6 +7,7 @@
 #include "array3.h"
 #include "array4.h"
 #include "X.h"
+#include "matrix1.h"
 
 using namespace std;
 
@@ -228,6 +229,8 @@ void DemoPointersVector5(){
 }
 
 void DemoPointersMatrix1(){
+    Matrix1<TI> matrix1;
+    Matrix1<TI> matrix2;
 }
 
 void Print1(string str, X &x)  { cout << str << x.ToString() << endl; }
