@@ -18,38 +18,32 @@ PYBIND11_MODULE(matrix1, m)
 
         .def("Create", &Matrix::Create)
         .def("Destroy", &Matrix::Destroy)
+        .def("transpose", &Matrix::transpose)
 
-        .def("read",
-            [](Matrix &self, const std::string &txt)
+        .def("read", [](Matrix &self, const std::string &txt)
             {
                 std::istringstream iss(txt);
                 self.Read(iss);
             })
 
-        .def("__str__",
-            [](Matrix &self)
+        .def("__str__", [](Matrix &self)
             {
                 std::ostringstream oss;
                 self.Print(oss);
                 return oss.str();
             })
 
-        .def("__getitem__",
-            [](Matrix &self, std::pair<size_t,size_t> idx)
+        .def("__getitem__", [](Matrix &self, std::pair<size_t,size_t> idx)
             {
                 return self[idx.first][idx.second];
             })
 
-        .def("__setitem__",
-            [](Matrix &self,
-               std::pair<size_t,size_t> idx,
-               double value)
+        .def("__setitem__", [](Matrix &self, std::pair<size_t,size_t> idx, TD value)
             {
                 self[idx.first][idx.second] = value;
             })
 
-        .def("__add__",
-            [](const Matrix &a, const Matrix &b)
+        .def("__add__", [](const Matrix &a, const Matrix &b)
             {
                 return a + b;
             })
@@ -66,8 +60,7 @@ PYBIND11_MODULE(matrix1, m)
         .def("__mul__",
             py::overload_cast<TD>(&Matrix::operator*, py::const_))
 
-        .def("__rmul__",
-            [](const Matrix &m, double value)
+        .def("__rmul__", [](const Matrix &m, TD value)
             {
                 return m * value;
             });

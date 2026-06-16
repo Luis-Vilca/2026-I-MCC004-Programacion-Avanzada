@@ -1,9 +1,9 @@
 CXX = g++
 
-PYTHON_INC = -IC:/Users/USER/AppData/Local/Programs/Python/Python313/Include
-PYBIND_INC = -IC:/Users/USER/AppData/Local/Programs/Python/Python313/Lib/site-packages/pybind11/include
-PYTHON_LIB = -LC:/Users/USER/AppData/Local/Programs/Python/Python313/libs
-PYTHON_LINK = -lpython313
+PYTHON_INC = -IC:/msys64/mingw64/include/python3.14
+PYBIND_INC = -IC:/msys64/mingw64/lib/python3.14/site-packages/pybind11/include
+PYTHON_LIB = -LC:/msys64/mingw64/lib
+PYTHON_LINK = -lpython3.14
 
 CXXFLAGS = -std=c++2b -Wall -g -pthread $(PYTHON_INC) $(PYBIND_INC)# Añadido -pthread
 LDFLAGS = -pthread # Añadido -pthread

@@ -1,9 +1,5 @@
 import os
 import sys
-
-print(os.getcwd())
-print(sys.path)
-
 import matrix1
 
 A = matrix1.Matrix1(2,2)
@@ -51,23 +47,8 @@ print(2 * m2)
 print("m2 * 2")
 print(m2 * 2)
 
-A = matrix1.Matrix1()
-A.read("""
-2 2
-1 2
-3 4
-""")
+m4 = m2 - m3
 
-B = matrix1.Matrix1()
-B.read("""
-2 2
-5 6
-7 8
-""")
-
-C = A * B
-
-print(C)
-
-Matrix = 5 * m2 + m3 * B
+Matrix = 5 * m2 + m3 * m4
 print(Matrix)
+print(Matrix.transpose())

@@ -29,7 +29,11 @@ class Matrix1 {
         Matrix1 operator*(T value) const;
         Matrix1 operator*(const Matrix1 &other) const;
         Matrix1& operator=(Matrix1&& other);
+        Matrix1 transpose() const;
         T* operator[](size_t row);
+
+        template <typename Func>
+        void ForEach(Func func) const;
 };
 
 template <typename T>
@@ -53,25 +57,14 @@ istream &Matrix1<T>::Read(istream &is){
     Destroy();
     is >> m_rows >> m_cols;
     Create();
-
-    for(size_t i = 0; i < m_rows; ++i)
-    {
-        for(size_t j = 0; j < m_cols; ++j)
-            is >> m_pMat[i][j];
-    }
-
+    ForEach([&](size_t i, size_t j){is >> m_pMat[i][j];});
     return is;
 };
 
 template <typename T>
 template <typename Func, typename... Args>
 void Matrix1<T>::ApplyFunctionToAll(Func func, Args&& ...args){
-    for(size_t i = 0; i < m_rows; ++i)
-    {
-        for(size_t j = 0; j < m_cols; ++j)
-            func(m_pMat[i][j], forward<Args>(args)...);
-    }
-
+    ForEach([&](size_t i, size_t j){ func(m_pMat[i][j], forward<Args>(args)...);});
 };
 
 template <typename T>
@@ -117,12 +110,8 @@ Matrix1<T> Matrix1<T>::operator+(const Matrix1<T> &other) const{
     Matrix1<T> result(m_rows, m_cols);
     result.Create();
 
-    for(size_t i = 0; i < m_rows; ++i)
-        for(size_t j = 0; j < m_cols; ++j)
-            result.m_pMat[i][j] = m_pMat[i][j] + other.m_pMat[i][j];
-
+    ForEach([&](size_t i, size_t j){result.m_pMat[i][j] = m_pMat[i][j] + other.m_pMat[i][j];});
     return result;
-
 }
 
 template <typename T>
@@ -133,10 +122,7 @@ Matrix1<T> Matrix1<T>::operator-(const Matrix1<T> &other) const{
     Matrix1<T> result(m_rows, m_cols);
     result.Create();
 
-    for(size_t i = 0; i < m_rows; ++i)
-        for(size_t j = 0; j < m_cols; ++j)
-            result.m_pMat[i][j] = m_pMat[i][j] - other.m_pMat[i][j];
-
+    ForEach([&](size_t i, size_t j){ result.m_pMat[i][j] = m_pMat[i][j] - other.m_pMat[i][j];});
     return result;
 
 }
@@ -147,10 +133,7 @@ Matrix1<T> Matrix1<T>::operator*(T value) const {
     Matrix1<T> result(m_rows, m_cols);
     result.Create();
 
-    for(size_t i = 0; i < m_rows; ++i)
-        for(size_t j = 0; j < m_cols; ++j)
-            result.m_pMat[i][j] = m_pMat[i][j] * value;
-
+    ForEach([&](size_t i, size_t j){result.m_pMat[i][j] = m_pMat[i][j] * value;});
     return result;
 }
 
@@ -163,13 +146,11 @@ Matrix1<T> Matrix1<T>::operator*(const Matrix1<T> &other) const {
     Matrix1<T> result(m_rows, other.m_cols);
     result.Create();
 
-    for(size_t i = 0; i < m_rows; ++i){
-        for(size_t j = 0; j < other.m_cols; ++j){
-            result.m_pMat[i][j] = T{};
-            for(size_t k = 0; k < m_cols; ++k)
-                result.m_pMat[i][j] += m_pMat[i][k] * other.m_pMat[k][j];
-        }
-    }
+     result.ForEach([&](size_t i, size_t j){
+        result.m_pMat[i][j] = T{}; 
+        for(size_t k = 0; k < m_cols; ++k)
+            result.m_pMat[i][j] +=m_pMat[i][k] * other.m_pMat[k][j];
+     });
     return result;
 }
 
@@ -195,10 +176,29 @@ Matrix1<T>& Matrix1<T>::operator=(Matrix1<T>&& other)
 }
 
 template <typename T>
+Matrix1<T> Matrix1<T>::transpose() const
+{
+    Matrix1<T> result(m_cols, m_rows);
+    result.Create();
+
+    ForEach([&](size_t i, size_t j){result.m_pMat[j][i] = m_pMat[i][j];});
+    return result;
+}
+
+template <typename T>
 T* Matrix1<T>::operator[](size_t row)
 {
     assert(row < m_rows);
     return m_pMat[row];
+}
+
+template <typename T>
+template <typename Func>
+void Matrix1<T>::ForEach(Func func) const
+{
+    for(size_t i = 0; i < m_rows; ++i)
+        for(size_t j = 0; j < m_cols; ++j)
+            func(i, j);
 }
 
 #endif // __MATRIX_H__

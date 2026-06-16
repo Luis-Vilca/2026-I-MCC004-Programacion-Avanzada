@@ -76,4 +76,7 @@ void DemoMatrix(){
 
     cout << m1[0][0] << endl;
 
+    m4 = m4.transpose();
+    cout << endl << m4 << endl;
+
 };
