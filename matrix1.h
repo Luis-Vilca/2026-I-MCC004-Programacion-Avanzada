@@ -20,8 +20,6 @@ class Matrix1 {
         ~Matrix1()     { Destroy(); }
         void     Create();
         istream &Read(istream &is);
-        template <typename Func, typename... Args>
-        void ApplyFunctionToAll(Func func, Args&& ...args);
         ostream &Print(ostream &os);
         void Destroy();
         Matrix1 operator+ (const Matrix1 &other) const;
@@ -30,10 +28,24 @@ class Matrix1 {
         Matrix1 operator*(const Matrix1 &other) const;
         Matrix1& operator=(Matrix1&& other);
         Matrix1 transpose() const;
-        T* operator[](size_t row);
+        const T* operator[](size_t row) const;
+        T*& operator[](size_t row);
+        TD determinant() const;
+
+        template <typename Func, typename... Args>
+        void ApplyFunctionToAll(Func func, Args&& ...args);
 
         template <typename Func>
         void ForEach(Func func) const;
+
+        template <typename Func>
+        void ForEachRow(size_t row, Func func) const;
+
+        template <typename Func>
+        void ForEachColumn(size_t col, Func func) const;
+
+        template <typename Func>
+        void ForEachRange(size_t rowBegin, size_t rowEnd, size_t colBegin, size_t colEnd, Func func) const;
 };
 
 template <typename T>
@@ -181,24 +193,103 @@ Matrix1<T> Matrix1<T>::transpose() const
     Matrix1<T> result(m_cols, m_rows);
     result.Create();
 
-    ForEach([&](size_t i, size_t j){result.m_pMat[j][i] = m_pMat[i][j];});
+    ForEach([&](size_t i, size_t j){result[j][i] = m_pMat[i][j];});
     return result;
 }
 
 template <typename T>
-T* Matrix1<T>::operator[](size_t row)
+const T* Matrix1<T>::operator[](size_t row) const
 {
     assert(row < m_rows);
     return m_pMat[row];
 }
 
 template <typename T>
-template <typename Func>
-void Matrix1<T>::ForEach(Func func) const
+T*& Matrix1<T>::operator[](size_t row)
 {
-    for(size_t i = 0; i < m_rows; ++i)
-        for(size_t j = 0; j < m_cols; ++j)
+    assert(row < m_rows);
+    return m_pMat[row];
+}
+
+template <typename T>
+TD Matrix1<T>::determinant() const
+{
+    if(m_rows != m_cols)
+        throw invalid_argument("Determinant requires a square matrix");
+
+    Matrix1<TD> temp(m_rows, m_cols);
+    temp.Create();
+
+    ForEach([&](size_t i, size_t j){temp[i][j] = m_pMat[i][j];});
+    TD det = 1;
+
+    for(size_t i = 0; i < m_rows; ++i){
+        size_t pivot = i;
+
+        temp.ForEachColumn(i, [&](size_t row){
+            if(row >= i && pivot == i && temp[row][i] != TD{})
+                pivot = row;
+        });
+
+        if(temp[pivot][i] == TD{})
+            return TD{};
+
+        if(pivot != i)
+        {
+            std::swap(temp[pivot], temp[i]);
+            det = -det;
+        }
+
+        det *= temp[i][i];
+
+        temp.ForEachRange(i + 1, m_rows, i, m_cols, [&](size_t row, size_t col)
+        {
+            static TD factor = 0;
+            if(col == i)
+                factor = temp[row][i] / temp[i][i];
+            temp[row][col] -= factor * temp[i][col];
+        });
+    }
+
+    return det;
+}
+
+template <typename T>
+template <typename Func>
+void Matrix1<T>::ForEachRange(size_t rowBegin, size_t rowEnd, size_t colBegin, size_t colEnd, Func func) const
+{
+    assert(rowBegin <= rowEnd);
+    assert(colBegin <= colEnd);
+    assert(rowEnd <= m_rows);
+    assert(colEnd <= m_cols);
+
+    for(size_t i = rowBegin; i < rowEnd; ++i)
+        for(size_t j = colBegin; j < colEnd; ++j)
             func(i, j);
 }
 
+template <typename T>
+template <typename Func>
+void Matrix1<T>::ForEach(Func func) const
+{
+    ForEachRange(0, m_rows, 0, m_cols, func);
+}
+
+template <typename T>
+template <typename Func>
+void Matrix1<T>::ForEachRow(size_t row, Func func) const
+{
+    assert(row < m_rows);
+
+    ForEachRange(row, row + 1, 0, m_cols, [&](size_t, size_t col){func(col);});
+}
+
+template <typename T>
+template <typename Func>
+void Matrix1<T>::ForEachColumn(size_t col, Func func) const
+{
+    assert(col < m_cols);
+
+    ForEachRange(0, m_rows, col, col + 1, [&](size_t row, size_t){func(row);});
+}
 #endif // __MATRIX_H__

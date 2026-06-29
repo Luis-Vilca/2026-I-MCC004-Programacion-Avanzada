@@ -79,4 +79,5 @@ void DemoMatrix(){
     m4 = m4.transpose();
     cout << endl << m4 << endl;
 
+    cout << m4.determinant();
 };

@@ -52,3 +52,13 @@ m4 = m2 - m3
 Matrix = 5 * m2 + m3 * m4
 print(Matrix)
 print(Matrix.transpose())
+
+m5 = matrix1.Matrix1()
+m5.read("""
+3 3
+1 2 3
+0 1 4
+5 6 0
+""")
+
+print(f"{m5.determinant():.6f}")
