@@ -28,6 +28,7 @@ using Area     = double;
 using TI = int;
 using TD = double;
 using TP = int;
+using UL = unsigned long;
 
 #endif // __TYPES_H__
 

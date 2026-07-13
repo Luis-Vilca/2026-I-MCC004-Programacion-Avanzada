@@ -7,11 +7,13 @@
     #include "matrix1.h"
 
     namespace py = pybind11;
-    using Matrix = Matrix1<TD>;
+    
 
-    PYBIND11_MODULE(matrix1, m)
-    {
-        py::class_<Matrix>(m, "Matrix1")
+    template<typename T>
+    void bind_matrix(py::module_ &m, const string &name){
+        using Matrix = Matrix1<T>;
+
+        py::class_<Matrix>(m, name.c_str())
             .def(py::init<size_t, size_t>(),
                 py::arg("rows") = 0,
                 py::arg("cols") = 0)
@@ -21,7 +23,7 @@
             .def("transpose", &Matrix::transpose)
             .def("determinant", &Matrix::determinant)
 
-            .def("read", [](Matrix &self, const std::string &txt){
+            .def("read", [](Matrix &self, const string &txt){
                     std::istringstream iss(txt);
                     self.Read(iss);
                 })
@@ -38,15 +40,22 @@
                     return oss.str();
                 })
 
-            .def("__getitem__", [](Matrix &self, std::pair<size_t,size_t> idx){ 
+            .def("__getitem__", [](Matrix &self, pair<size_t,size_t> idx){ 
                 return self[idx.first][idx.second];})
 
-            .def("__setitem__", [](Matrix &self, std::pair<size_t,size_t> idx, TD value){
+            .def("__setitem__", [](Matrix &self, pair<size_t,size_t> idx, T value){
                 self[idx.first][idx.second] = value;})
 
             .def("__add__", [](const Matrix &a, const Matrix &b){ return a + b;})
             .def("__sub__", [](const Matrix &a, const Matrix &b){return a - b;})
             .def("__mul__", py::overload_cast<const Matrix&>(&Matrix::operator*, py::const_))
-            .def("__mul__", py::overload_cast<TD>(&Matrix::operator*, py::const_))
-            .def("__rmul__", [](const Matrix &m, TD value) { return m * value;});
+            .def("__mul__", py::overload_cast<T>(&Matrix::operator*, py::const_))
+            .def("__rmul__", [](const Matrix &m, T value) { return m * value;});
+    }
+
+    PYBIND11_MODULE(matrix1, m)
+    {
+        bind_matrix<TD> (m, "Matrix1Double");
+        bind_matrix<T3F>(m, "Matrix1Float");
+        bind_matrix<TI> (m, "Matrix1Int");
     }

@@ -8,6 +8,8 @@
 #include "Pointers.h"
 #include "BitSigno.h"
 #include "DemoMatrix.h"
+#include "demoThreads.h"
+#include "demoRegex.h"
 
 using namespace std;
 
@@ -26,5 +28,8 @@ int main() {
     // DemoPointersVector5();
     //DemoPointersToMembers();
     DemoMatrix();
+    demoThreads();
+    demoRegex();
+    
     return 0;
 }

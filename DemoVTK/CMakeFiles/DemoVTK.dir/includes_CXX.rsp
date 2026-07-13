@@ -1,0 +1,1 @@
+-isystem C:/msys64/ucrt64/include/vtk -isystem C:/msys64/ucrt64/include/vtk/token -isystem C:/msys64/ucrt64/include/vtk/vtkkissfft -isystem C:/msys64/ucrt64/include/vtk/vtkglad
