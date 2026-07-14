@@ -12,7 +12,6 @@ using namespace std;
 constexpr TI NUM_ELEMENTS = 1000000;
 constexpr TI NUM_THREADS  = 4;
 
-static mutex g_mutex;
 
 static void processRange(vector<TI>& data, TI begin, TI end)
 {
@@ -68,8 +67,6 @@ void demoThreads()
     // Mostrar resultados
     //----------------------------
     {
-        scoped_lock lock(g_mutex);
-
         cout << "======================================" << endl;
         cout << "Numero de elementos : " << NUM_ELEMENTS << endl;
         cout << "Numero de hilos     : " << NUM_THREADS << endl;

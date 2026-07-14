@@ -11,6 +11,8 @@
 #include "../types.h"
 
 //cmake . -G "MinGW Makefiles"
+
+//Libera la memoria automaticamente
 class RotateCallback : public vtkCommand
 {
 public:
@@ -33,29 +35,37 @@ public:
 //vtkCubeSource -> vtkPolyDataMapper -> vtkActor -> vtkRenderer -> vtkRenderWindow -> vtkRenderWindowInteractor
 int main()
 {
+    //Crear la geometria
     vtkNew<vtkCubeSource> cube;
     cube->SetXLength(1);
     cube->SetYLength(1);
     cube->SetZLength(1);
 
+    //Mapper sirve para enviar la geometría a OpenGL
     vtkNew<vtkPolyDataMapper> mapper;
-    mapper->SetInputConnection(cube->GetOutputPort());
+    mapper->SetInputConnection(cube->GetOutputPort());//Conexión del mapper con la salida del cubo
 
+    //El actor representa un objeto dentro del mundo 3D
     vtkNew<vtkActor> actor;
+    //Recibe el mapper, así conoce la geometría y cómo dibujarla
     actor->SetMapper(mapper);
-    actor->GetProperty()->SetColor(0.2,0.8,1.0);
+    actor->GetProperty()->SetColor(0.2,0.8,1.0); //Color en formato RGB
 
+    //Escena, (puede contener a varios actores)
     vtkNew<vtkRenderer> renderer;
     renderer->AddActor(actor);
-    renderer->SetBackground(0.1,0.1,0.2);
+    renderer->SetBackground(0.1,0.1,0.2); //Color de fondo
 
+    //Ventana física, solo contiene renderizadores
     vtkNew<vtkRenderWindow> window;
-    window->AddRenderer(renderer);
-    window->SetSize(800,600);
+    window->AddRenderer(renderer); //Conecta la ventana con el renderer
+    window->SetSize(800,600); //Tamaño de la ventana
 
+    //Interactor administra mouse, teclado, eventos y bucle principal de la aplicación
     vtkNew<vtkRenderWindowInteractor> interactor;
-    interactor->SetRenderWindow(window);
+    interactor->SetRenderWindow(window); //Conectar el interactor con la ventana
 
+    //Acciones que responden a eventos
     vtkNew<RotateCallback> callback;
     callback->Actor = actor;
 
@@ -64,6 +74,7 @@ int main()
     interactor->CreateRepeatingTimer(20);
 
     window->Render();
+    //´P
     interactor->Start();
 
     return 0;
